@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 package bddsql;
-
-/**
- *
- * @author Formation
- */
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,7 +57,7 @@ public class ConnectionBDD {
                 this.cn = DriverManager.getConnection(ConnectionBDD.DB_URL, ConnectionBDD.DB_USER, ConnectionBDD.DB_PASSWORD);
             
             } catch (SQLException ex) {
-                
+                ex.printStackTrace();
                 return false;
                 
             }
