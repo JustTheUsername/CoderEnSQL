@@ -17,9 +17,16 @@ public class ProjetEval14 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        Airport aeroport = new Airport("KKK","MAchin Lake","USA");
        
         AirportDAO apDAO = new AirportDAO();
+      
+        boolean essai;
         
+        essai = apDAO.creer(aeroport); 
+        
+        System.out.println(essai);
         ArrayList<Airport> airportList = apDAO.getAll();
         
         System.out.println("il y a "+airportList.size()+" aeroports");
@@ -29,6 +36,7 @@ public class ProjetEval14 {
         
             System.out.println("Code AITA : "+ ap.getCode_AITA() +" --> "+ ap.getCity()+" , "+ap.getCountry());
         }
+
         
     }
     

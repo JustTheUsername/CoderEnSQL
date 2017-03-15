@@ -16,20 +16,23 @@ import java.util.ArrayList;
  *
  * @author Formation
  */
-public abstract class DAO <T>{
-    
-    protected ConnectionBDD bddmanager =null;
-    
-    public DAO(){
-    
-    this.bddmanager=ConnectionBDD.getInstance();
+public abstract class DAO<T> {
+
+    protected ConnectionBDD bddmanager = null;
+
+    public DAO() {
+
+        this.bddmanager = ConnectionBDD.getInstance();
     }
+
     //equivalent à un insernt into T 
     public abstract boolean creer(T obj);
+
     //equivalent à un delete from T
-    public abstract boolean supprimer (T obj);
+    public abstract boolean supprimer(T obj);
+
     //equivalent à un select * from T
     public abstract ArrayList<T> getAll();
-    
+
     public abstract T get(T obj);
 }

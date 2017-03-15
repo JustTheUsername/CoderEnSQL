@@ -15,34 +15,43 @@ import java.util.logging.Logger;
  *
  * @author Formation
  */
-public class AirportDAO extends DAO{
-    
+public class AirportDAO extends DAO {
+
     boolean succed = false;
-    
-    public AirportDAO(){
-    
+
+    public AirportDAO() {
+
         super();
-    
+
     }
 
     @Override
     public boolean creer(Object obj) {
-        return false;
-//        Airport ap = ( Airport) obj;
-//    
-//        if ( this.bddmanager.connect()){
-//            
-//            try {
-//               
-//                //Statement st = this.bddmanager.getConnectionManager().createStatement();
-//   
-//            
-//            } catch (SQLException ex) 
-//            {
-//                ex.printStackTrace();            }
-//            
-//        }
-//    return succed;
+
+        Airport ap = (Airport) obj;
+
+        
+        if (this.bddmanager.connect()){
+        try {
+                String query = " INSERT INTO airports VALUES (?, ?, ?)";
+                PreparedStatement st = this.bddmanager.getConnectionManager().prepareStatement(query);
+                st.setString(1, ap.getCode_AITA());
+                st.setString(2, ap.getCity());
+                st.setString(3, ap.getCountry());
+                
+                System.out.println(st.toString());
+                
+                int res = st.executeUpdate();
+            
+
+            succed = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AirportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return succed;
+
+    }
+     return succed;
     }
 
     @Override
@@ -52,32 +61,31 @@ public class AirportDAO extends DAO{
 
     @Override
     public ArrayList getAll() {
-        ArrayList<Airport> airportList = new ArrayList <>(); 
-    if(this.bddmanager.connect())
-    {
+        ArrayList<Airport> airportList = new ArrayList<>();
+        if (this.bddmanager.connect()) {
             try {
-                
+
                 Statement st = this.bddmanager.getConnectionManager().createStatement();
                 String requete = "SELECT * FROM airports";
                 ResultSet rs = st.executeQuery(requete);
-            
-                while(rs.next()){
-                    
-                   Airport ap = new Airport(rs.getString("aita"),rs.getString("city"),rs.getString("pays"));
+
+                while (rs.next()) {
+
+                    Airport ap = new Airport(rs.getString("aita"), rs.getString("city"), rs.getString("pays"));
                     airportList.add(ap);
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 return airportList;
             }
-        
-        
+
+        }
+        return airportList;
     }
-    return airportList;}
 
     @Override
     public Object get(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

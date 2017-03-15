@@ -12,18 +12,18 @@ import bddsql.ConnectionBDD;
  * @author Formation
  */
 public class Airport {
-    
+
     private String code_AITA;
     private String city;
     private String country;
-    
-    public Airport(String code_AITA,String city,String country){
-    
-        this.code_AITA=code_AITA;
+
+    public Airport(String code_AITA, String city, String country) {
+
+        this.code_AITA = code_AITA;
         this.city = city;
-        this.country=country;
-        
-            ConnectionBDD test = ConnectionBDD.getInstance();
+        this.country = country;
+
+        ConnectionBDD test = ConnectionBDD.getInstance();
 
     }
 
