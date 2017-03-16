@@ -84,6 +84,8 @@ public class AirportDAO extends DAO<Airport, String> {
                 System.out.println(stSuppr.toString());
 
                 stSuppr.executeUpdate();
+                
+                succed = true;
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
