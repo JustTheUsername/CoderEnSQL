@@ -6,6 +6,7 @@
 package datasave;
 
 import bddsql.ConnectionBDD;
+import java.util.Objects;
 
 /**
  *
@@ -50,4 +51,44 @@ public class Airport {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.code_AITA);
+        hash = 41 * hash + Objects.hashCode(this.city);
+        hash = 41 * hash + Objects.hashCode(this.country);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Airport other = (Airport) obj;
+        if (!Objects.equals(this.code_AITA, other.code_AITA)) {
+            return false;
+        }
+        if (!Objects.equals(this.city, other.city)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Airport{" + "code_AITA=" + code_AITA + ", city=" + city + ", country=" + country + '}';
+    }
+    
+    
 }

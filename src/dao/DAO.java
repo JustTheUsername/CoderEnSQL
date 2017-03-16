@@ -34,5 +34,8 @@ public abstract class DAO<T> {
     //equivalent à un select * from T
     public abstract ArrayList<T> getAll();
 
-    public abstract T get(T obj);
+    //equivalent à u select * from T WHERE
+    public abstract T find(T obj);
+    
+    public abstract T update(T obj);
 }

@@ -24,8 +24,8 @@ public class ProjetEval14 {
       
         boolean essai;
         
-        essai = apDAO.creer(aeroport); 
-        
+       // essai = apDAO.creer(aeroport); 
+       essai = apDAO.supprimer(aeroport);
         System.out.println(essai);
         ArrayList<Airport> airportList = apDAO.getAll();
         

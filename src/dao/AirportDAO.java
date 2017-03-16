@@ -34,14 +34,14 @@ public class AirportDAO extends DAO {
         if (this.bddmanager.connect()){
         try {
                 String query = " INSERT INTO airports VALUES (?, ?, ?)";
-                PreparedStatement st = this.bddmanager.getConnectionManager().prepareStatement(query);
-                st.setString(1, ap.getCode_AITA());
-                st.setString(2, ap.getCity());
-                st.setString(3, ap.getCountry());
+                PreparedStatement stInsert = this.bddmanager.getConnectionManager().prepareStatement(query);
+                stInsert.setString(1, ap.getCode_AITA());
+                stInsert.setString(2, ap.getCity());
+                stInsert.setString(3, ap.getCountry());
                 
-                System.out.println(st.toString());
+                System.out.println(stInsert.toString());
                 
-                int res = st.executeUpdate();
+                stInsert.executeUpdate();
             
 
             succed = true;
@@ -56,7 +56,34 @@ public class AirportDAO extends DAO {
 
     @Override
     public boolean supprimer(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+          Airport ap = (Airport) obj;
+        
+        if (this.bddmanager.connect())
+        {
+                
+              try {
+                String querySuppr = " DELETE FROM airports WHERE aita = ?";
+                PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
+                
+                stSuppr.setString(1, ap.getCode_AITA());
+                
+                System.out.println(stSuppr.toString());
+                
+                stSuppr.executeUpdate();
+            
+              } catch (SQLException ex) {
+                 ex.printStackTrace();
+                 
+                 return succed;
+              }
+
+          
+
+        
+        }
+    
+    return succed;
     }
 
     @Override
@@ -84,7 +111,12 @@ public class AirportDAO extends DAO {
     }
 
     @Override
-    public Object get(Object obj) {
+    public Object find(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object update(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
