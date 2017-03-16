@@ -6,16 +6,18 @@
 package dao;
 
 import datasave.Airport;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Formation
  */
-public class AirportDAO extends DAO <Airport,String>{
+public class AirportDAO extends DAO<Airport, String> {
 
     boolean succed = false;
 
@@ -24,90 +26,81 @@ public class AirportDAO extends DAO <Airport,String>{
         super();
 
     }
-    
+
     /*
      cette méthode ajoutera un objet de type airport à la bdd 
     elle prend comme argument l'obj à inserrer dans la table
      et retourne ce qui a effectivement été ajouté à la table 
     
-    */
-    
-
+     */
     @Override
-    public Airport creer(Airport obj) {
+    public Airport creer(Airport airport) {
 
-        Airport ap = (Airport) obj;
+        Airport ap = new Airport();
 
-        
-        if (this.bddmanager.connect()){
-        try {
-                String query = " INSERT INTO airports VALUES (?, ?, ?)";
+        if (this.bddmanager.connect()) {
+            try {
+                String query = "INSERT INTO airports VALUES (?, ?, ?)";
                 PreparedStatement stInsert = this.bddmanager.getConnectionManager().prepareStatement(query);
-                stInsert.setString(1, ap.getCode_AITA());
-                stInsert.setString(2, ap.getCity());
-                stInsert.setString(3, ap.getCountry());
-                
-                System.out.println(stInsert.toString());
-                
-                stInsert.executeUpdate();
-            
+                stInsert.setString(1, airport.getCode_AITA().toUpperCase());
+                stInsert.setString(2, airport.getCity());
+                stInsert.setString(3, airport.getCountry());
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+                System.out.println(stInsert.toString());
+
+                stInsert.executeUpdate();
+
+                ap = this.find(airport.getCode_AITA());
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return ap;
+
         }
         return ap;
+    }
 
-    }
-     return ap;
-    }
-    
     /* 
     
     Cette méthode prend en argument l'obj a supprimer de la table 
     (créé avec le constructeur contenant uniquement la clef primaire)
     Elle retourne un boolean si la suppression a été effectué ou non
         
-    */
-    
-    
+     */
     @Override
     public boolean supprimer(String obj) {
-        
-          String airportKey =  obj;
-        
-        if (this.bddmanager.connect())
-        {
-                
-              try {
+
+        String airportKey = obj;
+
+        if (this.bddmanager.connect()) {
+
+            try {
                 String querySuppr = " DELETE FROM airports WHERE aita = ?";
                 PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
-                
+
                 stSuppr.setString(1, airportKey);
-                
+
                 System.out.println(stSuppr.toString());
-                
+
                 stSuppr.executeUpdate();
-            
-              } catch (SQLException ex) {
-                 ex.printStackTrace();
-                 
-                 return succed;
-              }
 
-          
+            } catch (SQLException ex) {
+                ex.printStackTrace();
 
-        
+                return succed;
+            }
+
         }
-    
-    return succed;
+
+        return succed;
     }
-        
+
     /* 
     
         Cette methode retourne la table entière
     
-    */
-    
+     */
     @Override
     public ArrayList getAll() {
         ArrayList<Airport> airportList = new ArrayList<>();
@@ -132,77 +125,70 @@ public class AirportDAO extends DAO <Airport,String>{
         return airportList;
     }
 
-    
     /*
     
     Cette méthode prend en argument l'id de la ligne a changer et un objet de
     type aéroport qui est les modif à apporter 
     
-    */
-
-
+     */
     @Override
-    public Airport update(String id ,Airport obj) {
-        
+    public Airport update(String id, Airport obj) {
+
         Airport ap = (Airport) obj;
 
-        if (this.bddmanager.connect()){
-        try {
+        if (this.bddmanager.connect()) {
+            try {
                 String query = " UPDATE airports SET aita =? , city=?, pays =? where aita=?";
                 PreparedStatement stUpdate = this.bddmanager.getConnectionManager().prepareStatement(query);
                 stUpdate.setString(1, ap.getCode_AITA());
                 stUpdate.setString(2, ap.getCity());
                 stUpdate.setString(3, ap.getCountry());
                 stUpdate.setString(4, id);
-                
-                System.out.println(stUpdate.toString());
-                
-                stUpdate.executeUpdate();
-            
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+                System.out.println(stUpdate.toString());
+
+                stUpdate.executeUpdate();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return ap;
+
         }
         return ap;
-
-    }
-     return ap;
     }
 
     /*
     
     Cette méthode retourne l'aéroport avec le code AITA donné en argument 
        
-    */
-    
+     */
     @Override
     public Airport find(String id) {
-        
-        
+
         Airport airport = new Airport();
-        
+
         if (this.bddmanager.connect()) {
             try {
                 String requete = "SELECT * FROM airports WHERE aita = ?";
-                Statement stFind = this.bddmanager.getConnectionManager().createStatement();
-                PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(requete);
-                
-                stSuppr.setString(1, id);
-                
-                ResultSet rs = stFind.executeQuery(requete);
-                rs.next();
-                airport = new Airport(rs.getString("aita"), rs.getString("city"), rs.getString("pays"));
 
+                PreparedStatement stFind = this.bddmanager.getConnectionManager().prepareStatement(requete);
+
+                stFind.setString(1, id);
+
+                ResultSet rs = stFind.executeQuery();
+                if(rs.next()) {
+                    airport = new Airport(rs.getString("aita"), rs.getString("city"), rs.getString("pays"));
+                }
                 
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
- 
+
             }
 
         }
         return airport;
     }
-        
-    }
 
-
+}
