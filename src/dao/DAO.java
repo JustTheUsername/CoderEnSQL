@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Formation
  */
-public abstract class DAO<T> {
+public abstract class DAO<T,S> {
 
     protected ConnectionBDD bddmanager = null;
 
@@ -26,16 +26,17 @@ public abstract class DAO<T> {
     }
 
     //equivalent à un insernt into T 
-    public abstract boolean creer(T obj);
+    public abstract T creer(T obj);
 
     //equivalent à un delete from T
-    public abstract boolean supprimer(T obj);
+    public abstract boolean supprimer(S id);
 
     //equivalent à un select * from T
     public abstract ArrayList<T> getAll();
 
     //equivalent à u select * from T WHERE
-    public abstract T find(T obj);
+    public abstract T find(S id);
     
+    // equivalent à un Update
     public abstract T update(T obj);
 }

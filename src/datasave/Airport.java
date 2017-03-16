@@ -27,6 +27,18 @@ public class Airport {
         ConnectionBDD test = ConnectionBDD.getInstance();
 
     }
+    
+    public Airport(String code_AITA){
+    
+        this.code_AITA=code_AITA;
+        
+        ConnectionBDD test = ConnectionBDD.getInstance();
+        
+    }
+
+    public Airport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public String getCode_AITA() {
         return code_AITA;

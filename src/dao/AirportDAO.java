@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Formation
  */
-public class AirportDAO extends DAO {
+public class AirportDAO extends DAO <Airport,String>{
 
     boolean succed = false;
 
@@ -24,9 +24,17 @@ public class AirportDAO extends DAO {
         super();
 
     }
+    
+    /*
+     cette méthode ajoutera un objet de type airport à la bdd 
+    elle prend comme argument l'obj à inserrer dans la table
+     et retourne ce qui a effectivement été ajouté à la table 
+    
+    */
+    
 
     @Override
-    public boolean creer(Object obj) {
+    public Airport creer(Airport obj) {
 
         Airport ap = (Airport) obj;
 
@@ -44,20 +52,27 @@ public class AirportDAO extends DAO {
                 stInsert.executeUpdate();
             
 
-            succed = true;
         } catch (SQLException ex) {
             Logger.getLogger(AirportDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return succed;
+        return ap;
 
     }
-     return succed;
+     return ap;
     }
-
-    @Override
-    public boolean supprimer(Object obj) {
+    
+    /* 
+    
+    Cette méthode prend en argument l'obj a supprimer de la table (créé avec le constructeur contenant uniquement la clef primaire)
+    Elle retourne un boolean si la suppression a été effectué ou non
         
-          Airport ap = (Airport) obj;
+    */
+    
+    
+    @Override
+    public boolean supprimer(String obj) {
+        
+          String apKey =  obj;
         
         if (this.bddmanager.connect())
         {
@@ -66,7 +81,7 @@ public class AirportDAO extends DAO {
                 String querySuppr = " DELETE FROM airports WHERE aita = ?";
                 PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
                 
-                stSuppr.setString(1, ap.getCode_AITA());
+                stSuppr.setString(1, apKey);
                 
                 System.out.println(stSuppr.toString());
                 
@@ -85,7 +100,13 @@ public class AirportDAO extends DAO {
     
     return succed;
     }
-
+        
+    /* 
+    
+        Cette methode retourne la table entière
+    
+    */
+    
     @Override
     public ArrayList getAll() {
         ArrayList<Airport> airportList = new ArrayList<>();
@@ -110,14 +131,41 @@ public class AirportDAO extends DAO {
         return airportList;
     }
 
+
+
     @Override
-    public Object find(Object obj) {
+    public Airport update(Airport obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object update(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Airport find(String id) {
+        
+        
+        Airport airport = new Airport();
+        
+        if (this.bddmanager.connect()) {
+            try {
+                String requete = "SELECT * FROM airports WHERE aita = ?";
+                Statement stFind = this.bddmanager.getConnectionManager().createStatement();
+                PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(requete);
+                
+                stSuppr.setString(1, id);
+                
+                ResultSet rs = stFind.executeQuery(requete);
+                rs.next();
+                airport = new Airport(rs.getString("aita"), rs.getString("city"), rs.getString("pays"));
+
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+ 
+            }
+
+        }
+        return airport;
+    }
+        
     }
 
-}
+

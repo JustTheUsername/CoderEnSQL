@@ -18,26 +18,37 @@ public class ProjetEval14 {
      */
     public static void main(String[] args) {
         
-        Airport aeroport = new Airport("KKK","MAchin Lake","USA");
-       
-        AirportDAO apDAO = new AirportDAO();
-      
-        boolean essai;
-        
-       // essai = apDAO.creer(aeroport); 
-       essai = apDAO.supprimer(aeroport);
-        System.out.println(essai);
-        ArrayList<Airport> airportList = apDAO.getAll();
-        
-        System.out.println("il y a "+airportList.size()+" aeroports");
-        
-        System.out.println();
-        for ( Airport ap : airportList){
-        
-            System.out.println("Code AITA : "+ ap.getCode_AITA() +" --> "+ ap.getCity()+" , "+ap.getCountry());
-        }
-
-        
+//        Airport aeroport = new Airport("KKK","MAchin Lake","USA");
+//       
+//        Airport aeroportDelete =new Airport("KKK");
+//        
+//        AirportDAO apDAO = new AirportDAO();
+//      
+//        boolean essai;
+//        
+//        Créer l'aéroport définie au dessus 
+//        essai = apDAO.creer(aeroport); 
+//        
+//        supprime l'aéroport définie au dessus
+//        essai = apDAO.supprimer(aeroportDelete);
+//        
+//        return true si les requêtes ont fonctionnés
+//        System.out.println(essai);
+//        
+//         crée un array list qui contiendra toute la table
+//        ArrayList<Airport> airportList = apDAO.getAll();
+//        
+//        compte le nombre d'aéroport présent
+//        System.out.println("il y a "+airportList.size()+" aeroports");
+//        
+//        affiche la table
+//        System.out.println();
+//        for ( Airport ap : airportList){
+//        
+//            System.out.println("Code AITA : "+ ap.getCode_AITA() +" --> "+ ap.getCity()+" , "+ap.getCountry());
+//        }
+//
+//        
     }
     
 }
