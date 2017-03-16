@@ -63,7 +63,8 @@ public class AirportDAO extends DAO <Airport,String>{
     
     /* 
     
-    Cette méthode prend en argument l'obj a supprimer de la table (créé avec le constructeur contenant uniquement la clef primaire)
+    Cette méthode prend en argument l'obj a supprimer de la table 
+    (créé avec le constructeur contenant uniquement la clef primaire)
     Elle retourne un boolean si la suppression a été effectué ou non
         
     */
@@ -72,7 +73,7 @@ public class AirportDAO extends DAO <Airport,String>{
     @Override
     public boolean supprimer(String obj) {
         
-          String apKey =  obj;
+          String airportKey =  obj;
         
         if (this.bddmanager.connect())
         {
@@ -81,7 +82,7 @@ public class AirportDAO extends DAO <Airport,String>{
                 String querySuppr = " DELETE FROM airports WHERE aita = ?";
                 PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
                 
-                stSuppr.setString(1, apKey);
+                stSuppr.setString(1, airportKey);
                 
                 System.out.println(stSuppr.toString());
                 
@@ -131,13 +132,49 @@ public class AirportDAO extends DAO <Airport,String>{
         return airportList;
     }
 
+    
+    /*
+    
+    Cette méthode prend en argument l'id de la ligne a changer et un objet de
+    type aéroport qui est les modif à apporter 
+    
+    */
 
 
     @Override
-    public Airport update(Airport obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Airport update(String id ,Airport obj) {
+        
+        Airport ap = (Airport) obj;
+
+        if (this.bddmanager.connect()){
+        try {
+                String query = " UPDATE airports SET aita =? , city=?, pays =? where aita=?";
+                PreparedStatement stUpdate = this.bddmanager.getConnectionManager().prepareStatement(query);
+                stUpdate.setString(1, ap.getCode_AITA());
+                stUpdate.setString(2, ap.getCity());
+                stUpdate.setString(3, ap.getCountry());
+                stUpdate.setString(4, id);
+                
+                System.out.println(stUpdate.toString());
+                
+                stUpdate.executeUpdate();
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AirportDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ap;
+
+    }
+     return ap;
     }
 
+    /*
+    
+    Cette méthode retourne l'aéroport avec le code AITA donné en argument 
+       
+    */
+    
     @Override
     public Airport find(String id) {
         

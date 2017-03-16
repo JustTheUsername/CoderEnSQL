@@ -38,5 +38,5 @@ public abstract class DAO<T,S> {
     public abstract T find(S id);
     
     // equivalent à un Update
-    public abstract T update(T obj);
+    public abstract T update(S id ,T obj);
 }

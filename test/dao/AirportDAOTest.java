@@ -46,9 +46,9 @@ public class AirportDAOTest {
         System.out.println("creer");
         Object obj = null;
         AirportDAO instance = new AirportDAO();
-        boolean expResult = false;
-        boolean result = instance.creer(obj);
-        assertEquals(expResult, result);
+        Object expResult = false;
+   //     Object result = instance.creer(obj);
+    //    assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -62,8 +62,8 @@ public class AirportDAOTest {
         Object obj = null;
         AirportDAO instance = new AirportDAO();
         boolean expResult = false;
-        boolean result = instance.supprimer(obj);
-        assertEquals(expResult, result);
+   //     boolean result = instance.supprimer(obj);
+   //     assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -99,7 +99,7 @@ public class AirportDAOTest {
         String resultFind=result.toString();
         String expecteddResult="Airport{" + "code_AITA=" + "DXB" + ", city=" + "Dubaï" + ", country=" + "Émirats arabes unis" + '}';
         
-        assertEquals(expResult, result);
+        assertEquals(expecteddResult, resultFind);
         
         
 //        fail("The test case is a prototype.");
@@ -114,8 +114,8 @@ public class AirportDAOTest {
         Object obj = null;
         AirportDAO instance = new AirportDAO();
         Object expResult = null;
-        Object result = instance.update(obj);
-        assertEquals(expResult, result);
+  //      Object result = instance.update(obj);
+   //     assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
