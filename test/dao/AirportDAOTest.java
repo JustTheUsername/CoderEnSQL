@@ -42,7 +42,7 @@ public class AirportDAOTest {
     /**
      * Test of creer method, of class AirportDAO.
      */
-    @Test
+  /*  @Test
     public void testCreer() {
         System.out.println("creer");
         Airport obj = new Airport("KKK","Machin Lake","USA");
@@ -57,11 +57,13 @@ public class AirportDAOTest {
         String expectedResult = expResult.toString();
         String resultat = result.toString();
         
+        System.out.println(expectedResult);
+        
         assertEquals(expectedResult, resultat);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
-
+*/
 //    /**
 //     * Test of supprimer method, of class AirportDAO.
 //     */
@@ -110,16 +112,19 @@ public class AirportDAOTest {
     /**
      * Test of find method, of class AirportDAO.
      */
-//    @Test
-//    public void testFind() {
-//        System.out.println("find");
-//        String id = "";
-//        AirportDAO instance = new AirportDAO();
-//        Airport expResult = null;
-//        Airport result = instance.find(id);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//    
+    @Test
+    public void testFind() {
+        System.out.println("find");
+        String id = "KKK";
+        AirportDAO instance = new AirportDAO();
+        String expResult = "Airport{code_AITA=KKK, city=Machin Lake, country=USA}";
+        Airport result = instance.find(id);
+        
+        String resultat = result.toString();
+        
+        assertEquals(expResult, resultat);
+        // TODO review the generated test code and remove the default call to fail.
+       // fail("The test case is a prototype.");
+    }
+    
 }
