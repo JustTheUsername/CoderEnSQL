@@ -53,7 +53,7 @@ public class AirportDAO extends DAO <Airport,String>{
             
 
         } catch (SQLException ex) {
-            Logger.getLogger(AirportDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return ap;
 
@@ -161,7 +161,7 @@ public class AirportDAO extends DAO <Airport,String>{
             
 
         } catch (SQLException ex) {
-            Logger.getLogger(AirportDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return ap;
 
