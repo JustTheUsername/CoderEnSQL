@@ -14,11 +14,11 @@ public class Booking {
     private long bookingId;
     private long userId;
     private long flightId;
-    private byte seat;
+    private short seat;
     
     public Booking(){};
 
-    public Booking(long bookingId, long userId, long flightId, byte seat) {
+    public Booking(long bookingId, long userId, long flightId, short seat) {
        
         this.bookingId = bookingId;
         this.userId = userId;
@@ -26,6 +26,13 @@ public class Booking {
         this.seat = seat;
         
     }
+
+    public Booking(long userId, long flightId, short seat) {
+        this.userId = userId;
+        this.flightId = flightId;
+        this.seat = seat;
+    }
+    
 
     public long getBookingId() {
         return bookingId;
@@ -51,11 +58,11 @@ public class Booking {
         this.flightId = flightId;
     }
 
-    public byte getSeat() {
+    public short getSeat() {
         return seat;
     }
 
-    public void setSeat(byte seat) {
+    public void setSeat(short seat) {
         this.seat = seat;
     }
 

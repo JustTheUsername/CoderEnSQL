@@ -27,16 +27,23 @@ boolean succed = false;
             try {
                 
                 String query =" INSERT INTO bookings (user_id,flight_id,place)VALUES(?,?,?) ";
-                PreparedStatement stInsert = this.bddmanager.getConnectionManager().prepareStatement(query);
+                PreparedStatement stInsert = this.bddmanager.getConnectionManager().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
                 
                 stInsert.setLong(1, obj.getUserId());
                 stInsert.setLong(2, obj.getFlightId());
-                stInsert.setByte(3, obj.getSeat());
+                stInsert.setShort(3, obj.getSeat());
                 
                 System.out.println(stInsert.toString());
 
-                stInsert.executeUpdate();
-
+               int rs = stInsert.executeUpdate();
+                
+                  if(rs !=0){
+                    ResultSet id_increment = stInsert.getGeneratedKeys();
+                    if(id_increment.next()){
+                        booking.setBookingId(id_increment.getInt(1));
+                    }
+                }
+                  
                 booking = this.find(obj.getUserId());
             
             
@@ -55,7 +62,7 @@ boolean succed = false;
         if (this.bddmanager.connect()) {
 
             try {
-                String querySuppr = " DELETE FROM booking WHERE user_id = ?";
+                String querySuppr = " DELETE FROM bookings WHERE user_id = ?";
                 PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
 
                 stSuppr.setLong(1, userID);
@@ -106,7 +113,7 @@ boolean succed = false;
 
         if (this.bddmanager.connect()) {
             try {
-                String requete = "SELECT * FROM access_backoffice WHERE id = ?";
+                String requete = "SELECT * FROM bookings WHERE id = ?";
 
                 PreparedStatement stFind = this.bddmanager.getConnectionManager().prepareStatement(requete);
 
@@ -136,7 +143,7 @@ boolean succed = false;
                 PreparedStatement stUpdate = this.bddmanager.getConnectionManager().prepareStatement(query);
                 stUpdate.setLong(1, booking.getUserId());
                 stUpdate.setLong(2, booking.getFlightId());
-                stUpdate.setByte(3, booking.getSeat());
+                stUpdate.setShort(3, booking.getSeat());
                 stUpdate.setLong(4, id);
                 System.out.println(stUpdate.toString());
 
