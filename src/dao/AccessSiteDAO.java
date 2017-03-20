@@ -13,11 +13,13 @@ import java.util.ArrayList;
  *
  * @author Formation
  */
-public class AccessSiteDAO extends DAO<AccessSite,Long> {
- boolean succed = false;
+public class AccessSiteDAO extends DAO<AccessSite, Long> {
+
+    boolean succed = false;
+
     @Override
     public AccessSite creer(AccessSite obj) {
-            AccessSite access = new AccessSite();
+        AccessSite access = new AccessSite();
 
         if (this.bddmanager.connect()) {
             try {
@@ -39,12 +41,13 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
             return access;
 
         }
-        return access;}
+        return access;
+    }
 
-     @Override
+    @Override
     public boolean supprimer(Long id) {
-    Long userID = id;    
-           if (this.bddmanager.connect()) {
+        Long userID = id;
+        if (this.bddmanager.connect()) {
 
             try {
                 String querySuppr = " DELETE FROM access_backoffice WHERE user_id = ?";
@@ -55,7 +58,7 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
                 System.out.println(stSuppr.toString());
 
                 stSuppr.executeUpdate();
-                
+
                 succed = true;
 
             } catch (SQLException ex) {
@@ -71,7 +74,7 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
 
     @Override
     public ArrayList<AccessSite> getAll() {
-           ArrayList<AccessSite> accessList = new ArrayList<>();
+        ArrayList<AccessSite> accessList = new ArrayList<>();
         if (this.bddmanager.connect()) {
             try {
 
@@ -90,11 +93,12 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
             }
 
         }
-        return accessList;}
+        return accessList;
+    }
 
     @Override
     public AccessSite find(Long user_id) {
-      AccessSite access = new AccessSite();
+        AccessSite access = new AccessSite();
 
         if (this.bddmanager.connect()) {
             try {
@@ -105,10 +109,9 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
                 stFind.setLong(1, user_id);
 
                 ResultSet rs = stFind.executeQuery();
-                if(rs.next()) {
-                   access = new AccessSite(rs.getLong("user_id"), rs.getString("nickname"), rs.getString("password"));
+                if (rs.next()) {
+                    access = new AccessSite(rs.getLong("user_id"), rs.getString("nickname"), rs.getString("password"));
                 }
-                
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -116,11 +119,12 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
             }
 
         }
-        return access;}
+        return access;
+    }
 
     @Override
     public AccessSite update(Long id, AccessSite obj) {
-         AccessSite access = obj;
+        AccessSite access = obj;
 
         if (this.bddmanager.connect()) {
             try {
@@ -140,7 +144,6 @@ public class AccessSiteDAO extends DAO<AccessSite,Long> {
             return this.find(id);
 
         }
-        return this.find(id);}
+        return this.find(id);
     }
-    
-
+}

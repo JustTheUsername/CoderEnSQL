@@ -12,17 +12,21 @@ import java.util.Objects;
  * @author Formation
  */
 public class AccesBack {
+
     private long user_ID;
     private String nickname;
     private String password;
+
+    public AccesBack() {
+    }
+
+    ;
     
-    public AccesBack(){};
-    
-    public AccesBack(long user_id,String nickname,String password){ 
-    
-        this.nickname=nickname;
-        this.password=password;
-        this.user_ID=user_id;
+    public AccesBack(long user_id, String nickname, String password) {
+
+        this.nickname = nickname;
+        this.password = password;
+        this.user_ID = user_id;
     }
 
     @Override
@@ -86,5 +90,5 @@ public class AccesBack {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }

@@ -13,19 +13,19 @@ import java.util.ArrayList;
  *
  * @author Formation
  */
-public class AccesBackDAO extends DAO<AccesBack,Long>{
-    
+public class AccesBackDAO extends DAO<AccesBack, Long> {
+
     boolean succed = false;
-    
+
     /*
     Cette méthode ajoutera un objet de type airport à la bdd 
     elle prend comme argument l'obj à inserrer dans la table
     et retourne ce qui a effectivement été ajouté à la table 
     
-    */
+     */
     @Override
     public AccesBack creer(AccesBack obj) {
-            AccesBack access = new AccesBack();
+        AccesBack access = new AccesBack();
 
         if (this.bddmanager.connect()) {
             try {
@@ -47,7 +47,9 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
             return access;
 
         }
-        return access;}
+        return access;
+    }
+
     /* 
     
     Cette méthode prend en argument l'obj a supprimer de la table 
@@ -57,8 +59,8 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
      */
     @Override
     public boolean supprimer(Long id) {
-    Long userID = id;    
-           if (this.bddmanager.connect()) {
+        Long userID = id;
+        if (this.bddmanager.connect()) {
 
             try {
                 String querySuppr = " DELETE FROM access_backoffice WHERE user_id = ?";
@@ -69,7 +71,7 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
                 System.out.println(stSuppr.toString());
 
                 stSuppr.executeUpdate();
-                
+
                 succed = true;
 
             } catch (SQLException ex) {
@@ -85,7 +87,7 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
 
     @Override
     public ArrayList<AccesBack> getAll() {
-             ArrayList<AccesBack> accessList = new ArrayList<>();
+        ArrayList<AccesBack> accessList = new ArrayList<>();
         if (this.bddmanager.connect()) {
             try {
 
@@ -104,7 +106,8 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
             }
 
         }
-        return accessList;}
+        return accessList;
+    }
 
     @Override
     public AccesBack find(Long user_id) {
@@ -119,10 +122,9 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
                 stFind.setLong(1, user_id);
 
                 ResultSet rs = stFind.executeQuery();
-                if(rs.next()) {
-                   access = new AccesBack(rs.getLong("user_id"), rs.getString("nickname"), rs.getString("password"));
+                if (rs.next()) {
+                    access = new AccesBack(rs.getLong("user_id"), rs.getString("nickname"), rs.getString("password"));
                 }
-                
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -130,11 +132,12 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
             }
 
         }
-        return access;}
+        return access;
+    }
 
     @Override
     public AccesBack update(Long id, AccesBack obj) {
-         AccesBack access = obj;
+        AccesBack access = obj;
 
         if (this.bddmanager.connect()) {
             try {
@@ -154,6 +157,7 @@ public class AccesBackDAO extends DAO<AccesBack,Long>{
             return this.find(id);
 
         }
-        return this.find(id);}
-    
+        return this.find(id);
+    }
+
 }

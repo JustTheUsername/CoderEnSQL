@@ -12,17 +12,21 @@ import java.util.Objects;
  * @author Formation
  */
 public class AccessSite {
+
     private long user_ID;
     private String nickname;
     private String password;
+
+    public AccessSite() {
+    }
+
+    ;
     
-    public AccessSite(){};
-    
-    public AccessSite(long user_id,String nickname,String password){ 
-    
-        this.nickname=nickname;
-        this.password=password;
-        this.user_ID=user_id;
+    public AccessSite(long user_id, String nickname, String password) {
+
+        this.nickname = nickname;
+        this.password = password;
+        this.user_ID = user_id;
     }
 
     public long getUser_ID() {
@@ -86,5 +90,5 @@ public class AccessSite {
     public String toString() {
         return "AccessSite{" + "user_ID=" + user_ID + ", nickname=" + nickname + ", password=" + password + '}';
     }
-    
+
 }
