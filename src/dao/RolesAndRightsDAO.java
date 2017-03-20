@@ -112,10 +112,36 @@ public class RolesAndRightsDAO extends DAO<RolesAndRights, Long> {
 
         }
         return rarList;}
-
+/*
+    
+    Cette méthode retourne l'aéroport avec le code AITA donné en argument 
+       
+     */
     @Override
-    public RolesAndRights find(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RolesAndRights find(Long user_id) {
+        RolesAndRights rar = new RolesAndRights();
+
+        if (this.bddmanager.connect()) {
+            try {
+                String requete = "SELECT * FROM roles_rights WHERE user_id = ?";
+
+                PreparedStatement stFind = this.bddmanager.getConnectionManager().prepareStatement(requete);
+
+                stFind.setLong(1, user_id);
+
+                ResultSet rs = stFind.executeQuery();
+                if(rs.next()) {
+                   rar = new RolesAndRights(rs.getLong("user_id"), rs.getBoolean("admin"), rs.getBoolean("blocked"));
+                }
+                
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+
+            }
+
+        }
+        return rar;
     }
     /*
     
