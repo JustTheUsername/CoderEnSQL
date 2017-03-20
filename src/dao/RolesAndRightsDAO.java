@@ -156,12 +156,12 @@ public class RolesAndRightsDAO extends DAO<RolesAndRights, Long> {
 
         if (this.bddmanager.connect()) {
             try {
-                String query = " UPDATE roles_rights SET user_id =? , admin =?, blocked =? where aita=?";
+                String query = " UPDATE roles_rights SET user_id =? , admin =?, blocked =? where user_id=?";
                 PreparedStatement stUpdate = this.bddmanager.getConnectionManager().prepareStatement(query);
                 stUpdate.setLong(1, rar.getUser_ID());
                 stUpdate.setBoolean(2, rar.isAdmin());
                 stUpdate.setBoolean(3, rar.isBlocked());
-
+                stUpdate.setLong(4, id);
                 System.out.println(stUpdate.toString());
 
                 stUpdate.executeUpdate();

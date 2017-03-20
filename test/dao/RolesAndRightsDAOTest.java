@@ -51,7 +51,7 @@ public class RolesAndRightsDAOTest {
         
         RolesAndRightsDAO instance = new RolesAndRightsDAO();
         
-
+        instance.supprimer(34L);
         RolesAndRights expResult = obj;
         RolesAndRights result = instance.creer(obj);
         
@@ -97,10 +97,13 @@ public class RolesAndRightsDAOTest {
      RolesAndRightsDAO instance = new RolesAndRightsDAO();
      ArrayList<RolesAndRights> arrayOfResult = instance.getAll();
         for (RolesAndRights rar : arrayOfResult) {
-            result += rar.toString();
-            expResult += instance.find(rar.getUser_ID());
+            result += rar;
+            
         }
-     
+        expResult="RolesAndRights{user_ID=96, admin=true, blocked=false}RolesAndRights{user_ID=97, admin=false, blocked=false}";
+
+     System.out.println(arrayOfResult);
+     System.out.println(expResult);
      assertEquals(expResult, result);
     }
 
@@ -116,11 +119,11 @@ public class RolesAndRightsDAOTest {
         RolesAndRights role_right = new RolesAndRights(id,true,true);
         
         RolesAndRightsDAO instance = new RolesAndRightsDAO();
-        
+        instance.supprimer(id);
         instance.creer(role_right);
         
         
-        String expResult = "RolesAndRights{user_ID=34, admin=1 , blocked=1}";
+        String expResult = "RolesAndRights{user_ID=34, admin=true, blocked=true}";
         RolesAndRights result = instance.find(id);
         
         String resultat = result.toString();
