@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+import dao.RolesAndRightsDAO;
 /**
  *
  * @author Formation
@@ -45,13 +45,25 @@ public class RolesAndRightsDAOTest {
     @Test
     public void testCreer() {
         System.out.println("creer");
-        RolesAndRights role_right = null;
+
+        
+        RolesAndRights obj = new RolesAndRights(34L,true,true);
+        
         RolesAndRightsDAO instance = new RolesAndRightsDAO();
-        RolesAndRights expResult = null;
-        RolesAndRights result = instance.creer(role_right);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+
+        RolesAndRights expResult = obj;
+        RolesAndRights result = instance.creer(obj);
+        
+
+        String expectedResult = expResult.toString();
+        String resultat = result.toString();
+        
+        System.out.println(expectedResult);
+        
+        assertEquals(expectedResult, resultat);
+
+        instance.supprimer(obj.getUser_ID());
     }
 
     /**
@@ -60,13 +72,18 @@ public class RolesAndRightsDAOTest {
     @Test
     public void testSupprimer() {
         System.out.println("supprimer");
-        Long id = null;
+        
+        Long id = 34L;
+      
         RolesAndRightsDAO instance = new RolesAndRightsDAO();
-        boolean expResult = false;
+        
+        RolesAndRights role_right = new RolesAndRights(id,true,true);
+        instance.creer(role_right);
+        
+        
+        boolean expResult = true;
         boolean result = instance.supprimer(id);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -74,13 +91,17 @@ public class RolesAndRightsDAOTest {
      */
     @Test
     public void testGetAll() {
-        System.out.println("getAll");
-        RolesAndRightsDAO instance = new RolesAndRightsDAO();
-        ArrayList<RolesAndRights> expResult = null;
-        ArrayList<RolesAndRights> result = instance.getAll();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+     System.out.println("getAll");
+     String result = "";
+     String expResult = "";
+     RolesAndRightsDAO instance = new RolesAndRightsDAO();
+     ArrayList<RolesAndRights> arrayOfResult = instance.getAll();
+        for (RolesAndRights rar : arrayOfResult) {
+            result += rar.toString();
+            expResult += instance.find(rar.getUser_ID());
+        }
+     
+     assertEquals(expResult, result);
     }
 
     /**
@@ -89,13 +110,24 @@ public class RolesAndRightsDAOTest {
     @Test
     public void testFind() {
         System.out.println("find");
-        Long user_id = null;
+       
+        Long id = 34L;
+        //on créé ici l'objet à chercher
+        RolesAndRights role_right = new RolesAndRights(id,true,true);
+        
         RolesAndRightsDAO instance = new RolesAndRightsDAO();
-        RolesAndRights expResult = null;
-        RolesAndRights result = instance.find(user_id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        instance.creer(role_right);
+        
+        
+        String expResult = "RolesAndRights{user_ID=34, admin=1 , blocked=1}";
+        RolesAndRights result = instance.find(id);
+        
+        String resultat = result.toString();
+        
+        assertEquals(expResult, resultat);
+    //ici on supprime l'objet créé
+        instance.supprimer(34L);
     }
 
     /**
@@ -103,15 +135,20 @@ public class RolesAndRightsDAOTest {
      */
     @Test
     public void testUpdate() {
-        System.out.println("update");
-        Long id = null;
-        RolesAndRights obj = null;
+        Long id = 34L;
+        
         RolesAndRightsDAO instance = new RolesAndRightsDAO();
-        RolesAndRights expResult = null;
-        RolesAndRights result = instance.update(id, obj);
+        
+        RolesAndRights role_right = new RolesAndRights(id,true,true);
+        instance.creer(role_right);
+        
+        
+        RolesAndRights role_rightUpdates = new RolesAndRights(id,false,false);
+                
+        
+        RolesAndRights expResult = role_rightUpdates;
+        RolesAndRights result = instance.update(id, role_rightUpdates);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
