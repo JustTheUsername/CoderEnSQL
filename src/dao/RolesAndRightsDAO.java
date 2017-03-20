@@ -15,10 +15,18 @@ import java.util.ArrayList;
  */
 public class RolesAndRightsDAO extends DAO<RolesAndRights, Long> {
 
+    boolean succed = false;
+    
+    public RolesAndRightsDAO(){
+    
+        super();
+        
+    }
+    
     /*
-     cette méthode ajoutera un objet de type airport à la bdd 
+    Cette méthode ajoutera un objet de type airport à la bdd 
     elle prend comme argument l'obj à inserrer dans la table
-     et retourne ce qui a effectivement été ajouté à la table 
+    et retourne ce qui a effectivement été ajouté à la table 
     
      */
     @Override
@@ -47,25 +55,97 @@ public class RolesAndRightsDAO extends DAO<RolesAndRights, Long> {
         }
         return role;
     }
-
+    /* 
+    
+    Cette méthode prend en argument l'obj a supprimer de la table 
+    (créé avec le constructeur contenant uniquement la clef primaire)
+    Elle retourne un boolean si la suppression a été effectué ou non
+        
+     */
     @Override
     public boolean supprimer(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Long userID = id;    
+           if (this.bddmanager.connect()) {
+
+            try {
+                String querySuppr = " DELETE FROM roles_rights WHERE user_id = ?";
+                PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
+
+                stSuppr.setLong(1, userID);
+
+                System.out.println(stSuppr.toString());
+
+                stSuppr.executeUpdate();
+                
+                succed = true;
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+
+                return succed;
+            }
+
+        }
+
+        return succed;
     }
 
     @Override
     public ArrayList<RolesAndRights> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+         ArrayList<RolesAndRights> rarList = new ArrayList<>();
+        if (this.bddmanager.connect()) {
+            try {
+
+                Statement st = this.bddmanager.getConnectionManager().createStatement();
+                String requete = "SELECT * FROM roles_rights";
+                ResultSet rs = st.executeQuery(requete);
+
+                while (rs.next()) {
+
+                    RolesAndRights RaR = new RolesAndRights(rs.getLong("user_id"), rs.getBoolean("admin"), rs.getBoolean("blocked"));
+                    rarList.add(RaR);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                return rarList;
+            }
+
+        }
+        return rarList;}
 
     @Override
     public RolesAndRights find(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    /*
+    
+    Cette méthode prend en argument l'id de la ligne a changer et un objet de
+    type aéroport qui est les modif à apporter 
+    
+     */
+    
     @Override
     public RolesAndRights update(Long id, RolesAndRights obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+         RolesAndRights rar = obj;
+
+        if (this.bddmanager.connect()) {
+            try {
+                String query = " UPDATE roles_rights SET user_id =? , admin =?, blocked =? where aita=?";
+                PreparedStatement stUpdate = this.bddmanager.getConnectionManager().prepareStatement(query);
+                stUpdate.setLong(1, rar.getUser_ID());
+                stUpdate.setBoolean(2, rar.isAdmin());
+                stUpdate.setBoolean(3, rar.isBlocked());
+
+                System.out.println(stUpdate.toString());
+
+                stUpdate.executeUpdate();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return rar;
+
+        }
+        return rar;}
 
 }
