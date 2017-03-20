@@ -108,19 +108,23 @@ public class AirportDAOTest {
 
     }
 
-//    /**
-//     * Test of getAll method, of class AirportDAO.
-//     */
-//    @Test
-//    public void testGetAll() {
-//        System.out.println("getAll");
-//        AirportDAO instance = new AirportDAO();
-//        ArrayList expResult = null;
-//        ArrayList result = instance.getAll();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of getAll method, of class AirportDAO.
+     */
+    @Test
+    public void testGetAll() {
+
+     System.out.println("get all");
+     String result = "";
+     String expResult = "";
+     AirportDAO instance = new AirportDAO();
+     ArrayList<Airport> arrayOfResult = instance.getAll();
+        for (Airport airport : arrayOfResult) {
+            result += airport.toString();
+            expResult += instance.find(airport.getCode_AITA());
+        }
+     
+     assertEquals(expResult, result);}
 
 
 

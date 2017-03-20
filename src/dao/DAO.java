@@ -12,10 +12,6 @@ package dao;
 import bddsql.ConnectionBDD;
 import java.util.ArrayList;
 
-/**
- *
- * @author Formation
- */
 public abstract class DAO<T,S> {
 
     protected ConnectionBDD bddmanager = null;

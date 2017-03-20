@@ -11,19 +11,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-
-/**
- *
- * @author Formation
- */
 //la classe Connection BDD est le Singleton
 public class ConnectionBDD {
 
+    // ici toutes les variables necessaires à la connection
     private static final String DB_URL = "jdbc:mysql://localhost:3306/airafpa";
     private static final String DB_JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_USER = "ProjetEval14";
     private static final String DB_PASSWORD = "projeteval14";
 
+    //on initialise  un objet de type Connection à null 
     private Connection cn = null;
 
     private ConnectionBDD() {
@@ -51,7 +48,11 @@ public class ConnectionBDD {
     }
 
     public boolean connect() {
-        // si on a jamais été connecté on se connecte, sinon refresh la connection    
+        /* 
+        si on a jamais été connecté on se connecte,
+        sinon refresh la connection  
+        */  
+        
         if (this.cn == null) {
 
             try {

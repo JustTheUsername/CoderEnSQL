@@ -5,7 +5,6 @@
  */
 package datasave;
 
-import bddsql.ConnectionBDD;
 import java.util.Objects;
 
 /**
@@ -24,20 +23,16 @@ public class Airport {
         this.city = city;
         this.country = country;
 
+    }
+       
+    public Airport() {
         
-
     }
     
     public Airport(String code_AITA){
     
         this.code_AITA=code_AITA;
-        
-        
-        
-    }
-
-    public Airport() {
-        
+ 
     }
 
     public String getCode_AITA() {
