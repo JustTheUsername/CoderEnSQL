@@ -5,52 +5,57 @@
  */
 package dao;
 
-import datasave.AccessSite;
+import datasave.Booking;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Formation
  */
-public class AccessSiteDAO extends DAO<AccessSite, Long> {
-
-    boolean succed = false;
-
+public class BookingDAO extends DAO <Booking,Long>{
+boolean succed = false;
     @Override
-    public AccessSite creer(AccessSite obj) {
-        AccessSite access = new AccessSite();
-
-        if (this.bddmanager.connect()) {
+    public Booking creer(Booking obj) {
+        Booking booking = new Booking();
+    
+    if(this.bddmanager.connect()){
+    
+    
             try {
-                String query = "INSERT INTO access_site VALUES (?, ?, MD5(?))";
+                
+                String query =" INSERT INTO bookings (user_id,flight_id,place)VALUES(?,?,?) ";
                 PreparedStatement stInsert = this.bddmanager.getConnectionManager().prepareStatement(query);
-                stInsert.setLong(1, obj.getUser_ID());
-                stInsert.setString(2, obj.getNickname());
-                stInsert.setString(3, obj.getPassword());
-
+                
+                stInsert.setLong(1, obj.getUserId());
+                stInsert.setLong(2, obj.getFlightId());
+                stInsert.setByte(3, obj.getSeat());
+                
                 System.out.println(stInsert.toString());
 
                 stInsert.executeUpdate();
 
-                access = this.find(obj.getUser_ID());
-
+                booking = this.find(obj.getUserId());
+            
+            
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(BookingDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return access;
-
-        }
-        return access;
+            return booking;
+    }
+    
+    return booking;
     }
 
     @Override
     public boolean supprimer(Long id) {
-        Long userID = id;
+            Long userID = id;
         if (this.bddmanager.connect()) {
 
             try {
-                String querySuppr = " DELETE FROM access_site WHERE user_id = ?";
+                String querySuppr = " DELETE FROM booking WHERE user_id = ?";
                 PreparedStatement stSuppr = this.bddmanager.getConnectionManager().prepareStatement(querySuppr);
 
                 stSuppr.setLong(1, userID);
@@ -65,52 +70,51 @@ public class AccessSiteDAO extends DAO<AccessSite, Long> {
                 ex.printStackTrace();
 
                 return succed;
-            }
+            
 
-        }
-
-        return succed;
-    }
+        }}
+    
+    return succed;}
 
     @Override
-    public ArrayList<AccessSite> getAll() {
-        ArrayList<AccessSite> accessList = new ArrayList<>();
+    public ArrayList<Booking> getAll() {
+        ArrayList<Booking> bookingList = new ArrayList<>();
         if (this.bddmanager.connect()) {
             try {
 
                 Statement st = this.bddmanager.getConnectionManager().createStatement();
-                String requete = "SELECT * FROM access_site";
+                String requete = "SELECT * FROM bookings";
                 ResultSet rs = st.executeQuery(requete);
 
                 while (rs.next()) {
 
-                    AccessSite access = new AccessSite(rs.getLong("user_id"), rs.getString("nickname"), rs.getString("password"));
-                    accessList.add(access);
+                    Booking booking = new Booking(rs.getLong("id"),rs.getLong("user_id"), rs.getLong("flight_id"), rs.getByte("place"));
+                    bookingList.add(booking);
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                return accessList;
+                return bookingList;
             }
 
         }
-        return accessList;
+        return bookingList;
     }
 
     @Override
-    public AccessSite find(Long user_id) {
-        AccessSite access = new AccessSite();
+    public Booking find(Long booking_id) {
+            Booking booking = new Booking();
 
         if (this.bddmanager.connect()) {
             try {
-                String requete = "SELECT * FROM access_site WHERE user_id = ?";
+                String requete = "SELECT * FROM access_backoffice WHERE id = ?";
 
                 PreparedStatement stFind = this.bddmanager.getConnectionManager().prepareStatement(requete);
 
-                stFind.setLong(1, user_id);
+                stFind.setLong(1, booking_id);
 
                 ResultSet rs = stFind.executeQuery();
                 if (rs.next()) {
-                    access = new AccessSite(rs.getLong("user_id"), rs.getString("nickname"), rs.getString("password"));
+                    booking = new Booking(rs.getLong("id"),rs.getLong("user_id"), rs.getLong("flight_id"), rs.getByte("place"));
                 }
 
             } catch (SQLException ex) {
@@ -119,20 +123,20 @@ public class AccessSiteDAO extends DAO<AccessSite, Long> {
             }
 
         }
-        return access;
+        return booking;
     }
 
     @Override
-    public AccessSite update(Long id, AccessSite obj) {
-        AccessSite access = obj;
+    public Booking update(Long id, Booking obj) {
+            Booking booking = obj;
 
         if (this.bddmanager.connect()) {
             try {
-                String query = " UPDATE access_site SET user_id =? , nickname =?, password = MD5(?) where user_id=?";
+                String query = " UPDATE bookings SET user_id =? , flight_id =?, place = ? where id=?";
                 PreparedStatement stUpdate = this.bddmanager.getConnectionManager().prepareStatement(query);
-                stUpdate.setLong(1, access.getUser_ID());
-                stUpdate.setString(2, access.getNickname());
-                stUpdate.setString(3, access.getPassword());
+                stUpdate.setLong(1, booking.getUserId());
+                stUpdate.setLong(2, booking.getFlightId());
+                stUpdate.setByte(3, booking.getSeat());
                 stUpdate.setLong(4, id);
                 System.out.println(stUpdate.toString());
 
@@ -146,4 +150,5 @@ public class AccessSiteDAO extends DAO<AccessSite, Long> {
         }
         return this.find(id);
     }
+    
 }
