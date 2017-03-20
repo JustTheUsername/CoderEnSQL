@@ -139,15 +139,15 @@ public class AccesBackDAOTest {
         
         AccesBackDAO instance = new AccesBackDAO();
         
-        AccesBack role_right = new AccesBack(id,"Paul","Paul");
-        instance.creer(role_right);
+        AccesBack access = new AccesBack(id,"Paul","Paul");
+        instance.creer(access);
         
         
-        AccesBack role_rightUpdates = new AccesBack(id,"Martin","Martin");
+        AccesBack accesUpdates = new AccesBack(id,"Martin","Martin");
                 
         
        
-        AccesBack result = instance.update(id, role_rightUpdates);
+        AccesBack result = instance.update(id, accesUpdates);
         AccesBack expResult = instance.find(id);
         assertEquals(expResult, result);
     }

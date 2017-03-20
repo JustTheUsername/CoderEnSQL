@@ -139,15 +139,15 @@ public class AccessSiteDAOTest {
         
         AccessSiteDAO instance = new AccessSiteDAO();
         
-        AccessSite role_right = new AccessSite(id,"Paul","Paul");
-        instance.creer(role_right);
+        AccessSite acces = new AccessSite(id,"Paul","Paul");
+        instance.creer(acces);
         
         
-        AccessSite role_rightUpdates = new AccessSite(id,"Martin","Martin");
+        AccessSite accesUpdates = new AccessSite(id,"Martin","Martin");
                 
         
        
-        AccessSite result = instance.update(id, role_rightUpdates);
+        AccessSite result = instance.update(id, accesUpdates);
         AccessSite expResult = instance.find(id);
         assertEquals(expResult, result);
     }
